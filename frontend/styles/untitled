@@ -1,0 +1,4 @@
+.chy-onek-text{
+
+  overflow: auto !important;
+}
