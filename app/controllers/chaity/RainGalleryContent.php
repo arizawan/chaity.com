@@ -19,8 +19,13 @@ class RainGalleryContent extends BaseController {
     }
 
     public function postAddNewCategory(){
-        $data       =   Input::only('name', 'parent', 'position', 'updatedby');
-        $category = new Category;
+        $data       =   Input::only('id', 'name', 'parent', 'position', 'updatedby');
+
+        if($data['id']){
+            $category = Category::find($data['id']);
+        }else{
+            $category = new Category;
+        }
         $category->name = $data['name'];
         $category->parent = $data['parent'];
         $category->position = $data['position'];
@@ -28,6 +33,35 @@ class RainGalleryContent extends BaseController {
         $category->save();
 
         return Redirect::to('/admin/category/add');
+
+    }
+
+    public function postAddNewImage(){
+        $data       =   Input::only('id', 'name', 'category', 'position', 'updatedby', 'slidefile');
+
+        if($data['id']){
+            $gallery = Gallery::find($data['id']);
+        }else{
+            $gallery = new Gallery;
+        }
+
+        $gallery->name = $data['name'];
+        $gallery->category = $data['category'];
+        $gallery->position = $data['position'];
+        $gallery->updatedby = $data['updatedby'];
+
+        $file       =   Input::file('slidefile');
+        if($file){
+            $name       =   $file->getClientOriginalName();
+            $extension  =   $file->getClientOriginalExtension();
+            $newfilename=   uniqid(md5(rand(0000, 9999).$name)).'.'.$extension;
+            $image      =   Image::make($_FILES['slidefile']['tmp_name'])->resize(1366, 768)->save('uploads/'.$newfilename,100);
+            $gallery->imageurl = 'uploads/'.$newfilename;
+        }
+
+        $gallery->save();
+
+        return Redirect::to('/admin/photogallery/list');
 
     }
 

@@ -26,19 +26,19 @@
                               <tr>
                                   <td>{{$img->id}}</td>
                                   <td>
-                                    <img  width="50%" src="/{{$img->image}}"/>
+                                    <img  width="30%" src="/{{$img->imageurl}}"/>
                                   </td>
-                                  <td>{{$img->title}}</td>
-                                  <td><small>{{$img->desc}}</small></td>
+                                  <td>{{$img->name}}</td>
+                                  <td><small>{{Category::find($img->category)->name}}</small></td>
 
-                                  <td style="text-align:center; font-weight:bold;">{{$img->position}}</td>
+                                  <td>{{$img->position}}</td>
 
                                   <td>
 
-                                      <a class="btn btn-primary btn-xs" href="/admin/homeslide/edit/{{$img->id}}"><i class="fa fa-pencil"></i></a>
+                                      <a class="btn btn-primary btn-xs" href="/admin/photogallery/edit/{{$img->id}}"><i class="fa fa-pencil"></i></a>
 
 
-                                      <a class="btn btn-danger btn-xs" href="/admin/homeslide/delete/{{$img->id}}"><i class="fa fa-trash-o"></i></a>
+                                      <a class="btn btn-danger btn-xs" href="/admin/photogallery/delete/{{$img->id}}"><i class="fa fa-trash-o"></i></a>
 
                                   </td>
                               </tr>

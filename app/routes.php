@@ -245,11 +245,13 @@ Route::group(array('before' => 'admin.login', 'prefix' => 'admin/category'), fun
     Route::get('/delete/{id}', function($id)
     {
         $user = Sentry::getUser();
-        $editVarsdata   =   Category::find($id)->delete();
-        return View::make('backend.category')
-                    ->with('edit',false)
-                    ->with('editData',[])
-                    ->with('user',$user);
+
+        $getDelData = Category::find($id);
+        if($getDelData){
+            $getDelData->delete();
+        }
+
+        return Redirect::to('/admin/category/add');
     });
 
     Route::post('/add', array('uses' => 'RainGalleryContent@postAddNewCategory'));
@@ -263,16 +265,43 @@ Route::group(array('before' => 'admin.login', 'prefix' => 'admin/photogallery'),
     {
         $user = Sentry::getUser();
         return View::make('backend.photoadd')
+                    ->with('edit',false)
+                    ->with('editData',[])
                     ->with('user',$user);
     });
+
+    Route::post('/add', array('uses' => 'RainGalleryContent@postAddNewImage'));
 
     # Admin List photo
     Route::get('/list', function()
     {
         $user = Sentry::getUser();
+        $galleryImages = Gallery::get();
         return View::make('backend.photolist')
                     ->with('user',$user)
-                    ->with('galleryimg',[]);
+                    ->with('galleryimg',$galleryImages);
+    });
+
+    # Admin Edit category
+    Route::get('/edit/{id}', function($id)
+    {
+        $user = Sentry::getUser();
+        $editVarsdata   =   Gallery::find($id);
+        return View::make('backend.photoadd')
+                    ->with('edit',true)
+                    ->with('editData',$editVarsdata)
+                    ->with('user',$user);
+    });
+
+    Route::get('/delete/{id}', function($id)
+    {
+        $user = Sentry::getUser();
+        $getDelData = Gallery::find($id);
+        if($getDelData){
+            $getDelData->delete();
+        }
+
+        return Redirect::to('/admin/photogallery/list');
     });
 });
 

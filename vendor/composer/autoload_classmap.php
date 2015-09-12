@@ -25,6 +25,7 @@ return array(
     'CreateTokensTable' => $baseDir . '/app/database/migrations/2014_12_24_060739_create_tokens_table.php',
     'CreateVideolistTable' => $baseDir . '/app/database/migrations/2014_12_19_163951_create_videolist_table.php',
     'DatabaseSeeder' => $baseDir . '/app/database/seeds/DatabaseSeeder.php',
+    'Gallery' => $baseDir . '/app/models/gallery.php',
     'Groups' => $baseDir . '/app/models/Groups.php',
     'HomeContents' => $baseDir . '/app/models/HomeContents.php',
     'HomeController' => $baseDir . '/app/controllers/HomeController.php',

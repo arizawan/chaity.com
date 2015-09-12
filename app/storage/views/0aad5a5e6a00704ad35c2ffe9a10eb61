@@ -24,19 +24,19 @@
                               <tr>
                                   <td><?php echo $img->id; ?></td>
                                   <td>
-                                    <img  width="50%" src="/<?php echo $img->image; ?>"/>
+                                    <img  width="30%" src="/<?php echo $img->imageurl; ?>"/>
                                   </td>
-                                  <td><?php echo $img->title; ?></td>
-                                  <td><small><?php echo $img->desc; ?></small></td>
+                                  <td><?php echo $img->name; ?></td>
+                                  <td><small><?php echo Category::find($img->category)->name; ?></small></td>
 
-                                  <td style="text-align:center; font-weight:bold;"><?php echo $img->position; ?></td>
+                                  <td><?php echo $img->position; ?></td>
 
                                   <td>
 
-                                      <a class="btn btn-primary btn-xs" href="/admin/homeslide/edit/<?php echo $img->id; ?>"><i class="fa fa-pencil"></i></a>
+                                      <a class="btn btn-primary btn-xs" href="/admin/photogallery/edit/<?php echo $img->id; ?>"><i class="fa fa-pencil"></i></a>
 
 
-                                      <a class="btn btn-danger btn-xs" href="/admin/homeslide/delete/<?php echo $img->id; ?>"><i class="fa fa-trash-o"></i></a>
+                                      <a class="btn btn-danger btn-xs" href="/admin/photogallery/delete/<?php echo $img->id; ?>"><i class="fa fa-trash-o"></i></a>
 
                                   </td>
                               </tr>

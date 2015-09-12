@@ -22,6 +22,11 @@
                                           <input type="text" class="form-control" name="name"
                                           value="<?php if($edit){echo $editVars->name;} ?>">
                                       </div>
+                                      <?php
+                                        if($edit){
+                                          echo '<input type="hidden" class="form-control" name="id" value="'.$editVars->id.'">';
+                                        }
+                                      ?>
                                   </div>
 
                                   <div class="form-group">

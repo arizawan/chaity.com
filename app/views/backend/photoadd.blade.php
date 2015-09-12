@@ -9,6 +9,12 @@
             <div class="row mt">
               <div class="col-lg-12">
 
+                          <?php
+                          $editVars = [];
+                          if($edit){
+                            $editVars = $editData;
+                          }
+                        ?>
 
                           <div class="form-panel">
 
@@ -17,19 +23,34 @@
                                   <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label">Title</label>
                                       <div class="col-sm-10">
-                                          <input type="text" class="form-control" name="name">
+                                          <input type="text" class="form-control" name="name"
+                                          value="<?php if($edit){echo $editVars->name;} ?>">
                                       </div>
+                                      <?php
+                                        if($edit){
+                                          echo '<input type="hidden" class="form-control" name="id" value="'.$editVars->id.'">';
+                                        }
+                                      ?>
                                   </div>
 
                                   <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label">Select Category</label>
                                       <div class="col-sm-10">
-                                          <select class="form-control" name="parent">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
+                                          <select class="form-control" name="category">
+                                          <?php
+                                            $getAllCategorys = Category::get();
+                                            $selected = '';
+                                            foreach($getAllCategorys as $category){
+                                              if($edit && $category->id == $editVars->category){
+                                                $selected = 'selected="selected"';
+                                              }else{
+                                                $selected = '';
+                                              }
+                                          ?>
+                                            <option value="<?php echo $category->id;?>" {{$selected}}><?php echo $category->name;?></option>
+                                          <?php
+                                            }
+                                          ?>
                                           </select>
                                       </div>
                                   </div>
@@ -44,7 +65,8 @@
                                   <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label">Position</label>
                                       <div class="col-sm-10">
-                                          <input type="text" class="form-control" name="position">
+                                          <input type="text" class="form-control" name="position"
+                                          value="<?php if($edit){echo $editVars->position;} ?>">
                                       </div>
                                   </div>
 
