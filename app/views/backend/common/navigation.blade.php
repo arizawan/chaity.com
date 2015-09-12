@@ -1,7 +1,7 @@
 @section('navigation')
 <li class="sub-menu">
     <a href="javascript:;" >
-        <i class="fa fa-desktop"></i>
+        <i class="fa fa-home"></i>
         <span>Home Page Slides</span>
     </a>
     <ul class="sub">
@@ -12,7 +12,7 @@
 </li>
 <li class="sub-menu">
     <a href="javascript:;" >
-        <i class="fa fa-desktop"></i>
+        <i class="fa fa-align-right"></i>
         <span>Home Page Contents</span>
     </a>
     <ul class="sub">
@@ -24,7 +24,18 @@
 </li>
 <li class="sub-menu">
     <a href="javascript:;" >
-        <i class="fa fa-desktop"></i>
+        <i class="fa fa-picture-o"></i>
+        <span>Photo Gallery</span>
+    </a>
+    <ul class="sub">
+        <li><a  href="/admin/category/add">Category</a></li>
+        <li><a  href="/admin/photogallery/add">Add New Image</a></li>
+        <li><a  href="/admin/photogallery/list">List Images</a></li>
+    </ul>
+</li>
+<li class="sub-menu">
+    <a href="javascript:;" >
+        <i class="fa fa-cogs"></i>
         <span>Settings</span>
     </a>
     <ul class="sub">

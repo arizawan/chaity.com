@@ -219,6 +219,62 @@ Route::group(array('before' => 'admin.login', 'prefix' => 'admin/videos'), funct
 
 });
 
+// Admin Panel | category
+Route::group(array('before' => 'admin.login', 'prefix' => 'admin/category'), function()
+{
+    # Admin Add category
+    Route::get('/add', function()
+    {
+        $user = Sentry::getUser();
+        return View::make('backend.category')
+                    ->with('edit',false)
+                    ->with('user',$user);
+    });
+
+    # Admin Edit category
+    Route::get('/edit/{id}', function($id)
+    {
+        $user = Sentry::getUser();
+        $editVarsdata   =   Category::find($id);
+        return View::make('backend.category')
+                    ->with('edit',true)
+                    ->with('editData',$editVarsdata)
+                    ->with('user',$user);
+    });
+
+    Route::get('/delete/{id}', function($id)
+    {
+        $user = Sentry::getUser();
+        $editVarsdata   =   Category::find($id)->delete();
+        return View::make('backend.category')
+                    ->with('edit',false)
+                    ->with('editData',[])
+                    ->with('user',$user);
+    });
+
+    Route::post('/add', array('uses' => 'RainGalleryContent@postAddNewCategory'));
+});
+
+// Admin Panel | photogallery
+Route::group(array('before' => 'admin.login', 'prefix' => 'admin/photogallery'), function()
+{
+    # Admin Add photo
+    Route::get('/add', function()
+    {
+        $user = Sentry::getUser();
+        return View::make('backend.photoadd')
+                    ->with('user',$user);
+    });
+
+    # Admin List photo
+    Route::get('/list', function()
+    {
+        $user = Sentry::getUser();
+        return View::make('backend.photolist')
+                    ->with('user',$user)
+                    ->with('galleryimg',[]);
+    });
+});
 
 // Admin Panel | HomeSlides
 Route::group(array('before' => 'admin.login', 'prefix' => 'admin/homeslide'), function()

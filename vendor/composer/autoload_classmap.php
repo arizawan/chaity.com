@@ -19,6 +19,7 @@ return array(
     'Cartalyst\\Sentry\\Users\\UserNotActivatedException' => $vendorDir . '/cartalyst/sentry/src/Cartalyst/Sentry/Users/Exceptions.php',
     'Cartalyst\\Sentry\\Users\\UserNotFoundException' => $vendorDir . '/cartalyst/sentry/src/Cartalyst/Sentry/Users/Exceptions.php',
     'Cartalyst\\Sentry\\Users\\WrongPasswordException' => $vendorDir . '/cartalyst/sentry/src/Cartalyst/Sentry/Users/Exceptions.php',
+    'Category' => $baseDir . '/app/models/category.php',
     'CreateScheduleTable' => $baseDir . '/app/database/migrations/2014_12_23_162714_create_schedule_table.php',
     'CreateSessionTable' => $baseDir . '/app/database/migrations/2014_12_26_075657_create_session_table.php',
     'CreateTokensTable' => $baseDir . '/app/database/migrations/2014_12_24_060739_create_tokens_table.php',
@@ -37,6 +38,7 @@ return array(
     'RainAuthController' => $baseDir . '/app/controllers/User/RainAuthController.php',
     'RainCHHomeContent' => $baseDir . '/app/controllers/chaity/RainCHHomeContent.php',
     'RainCHSlideController' => $baseDir . '/app/controllers/chaity/RainCHSlideController.php',
+    'RainGalleryContent' => $baseDir . '/app/controllers/chaity/RainGalleryContent.php',
     'RainTvController' => $baseDir . '/app/controllers/tv/RainTvController.php',
     'Schedule' => $baseDir . '/app/models/Schedule.php',
     'SessionHandlerInterface' => $vendorDir . '/symfony/http-foundation/Symfony/Component/HttpFoundation/Resources/stubs/SessionHandlerInterface.php',
@@ -47,4 +49,5 @@ return array(
     'Whoops\\Module' => $vendorDir . '/filp/whoops/src/deprecated/Zend/Module.php',
     'Whoops\\Provider\\Zend\\ExceptionStrategy' => $vendorDir . '/filp/whoops/src/deprecated/Zend/ExceptionStrategy.php',
     'Whoops\\Provider\\Zend\\RouteNotFoundStrategy' => $vendorDir . '/filp/whoops/src/deprecated/Zend/RouteNotFoundStrategy.php',
+    'newsGal' => $baseDir . '/app/models/newsGal.php',
 );
