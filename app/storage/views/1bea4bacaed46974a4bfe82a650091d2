@@ -101,7 +101,7 @@
 
                         </li>
                         <li >
-                          <a href="/frontend/gallery-page.html">
+                          <a href="/gallery/show/">
                             Gallery
                           </a>
 
@@ -131,53 +131,128 @@
               <div class="col-xs-12 give-green-shade cht-push-left">
                   <h1 class="left-title mark-yellow">Gallery</h1>
 
+                  <?php
+                    $categoryData = [];
+                    if($showForCategory){
+                      $categoryData = $getCategoryData;
+                    }else{
+
+                    }
+                  ?>
+
                   <ul class="list-unstyled chy-side-nav assign-scroll" style="text-align:left; height:70% !important; overflow:hidden; position: relative; padding-top:10px;">
 
-                  <li>
-                    <a href="/gallery/show/knitting" style="color:#fff; padding-bottom:10px;" class="galhover">Knitting</a>
-                  </li>
-                  <li>
-                    <a href="/gallery/show/dyeing" style="color:#fff; padding-bottom:10px;" class="galhover">Dyeing</a>
-                  </li>
-                  <li>
-                    <a href="/gallery/show/dyeing-finishing" style="color:#fff; padding-bottom:10px;" class="galhover">Dyeing Finishing</a>
-                  </li>
-                  <li>
-                    <a href="/gallery/show/laboratory" style="color:#fff; padding-bottom:10px;" class="galhover">Laboratory</a>
-                  </li>
-                  <li>
-                    <a href="/gallery/show/cutting" style="color:#fff; padding-bottom:10px;" class="galhover">Cutting</a>
-                  </li>
-                  <li>
-                    <a href="/gallery/show/sewing" style="color:#fff; padding-bottom:10px;" class="galhover">Sewing</a>
-                  </li>
-                  <li>
-                    <a href="/gallery/show/quality" style="color:#fff; padding-bottom:10px;" class="galhover">Quality</a>
-                  </li>
-                  <li>
-                    <a href="/gallery/show/finishing-packing-area" style="color:#fff; padding-bottom:10px;" class="galhover">Finishing & Packing Area</a>
-                  </li>
-                  <li>
-                    <a href="/gallery/show/accessories" style="color:#fff; padding-bottom:10px;" class="galhover">Accessories</a>
-                  </li>
-                  <li>
-                    <a href="/gallery/show/factoryoverview" style="color:#fff; padding-bottom:10px;" class="galhover">Factory Overview</a>
-                  </li>
-                  <li>
-                    <a href="/gallery/show/officeinterior" style="color:#fff; padding-bottom:10px;" class="galhover">Office Interior</a>
-                  </li>
-                  <li>
-                    <a href="/gallery/show/etp" style="color:#fff; padding-bottom:10px;" class="galhover">ETP</a>
-                  </li>
+                    <?php
+                      $getAllCategory = Category::orderBy('position')->get();
+
+                      foreach ($getAllCategory as $category) {
+                        $link = '';
+
+                        if($category->parent != 1){
+                        }else{
+
+                          if($category->name !== 'None...'){
+                            $link = '/gallery/show/'.$category->name.'/'.$category->id;
+                            $getSubCategorys = Category::where('parent','=',$category->id)->orderBy('position')->get();
+                            $subcatshtml  = '';
+                            foreach ($getSubCategorys as $subcats) {
+                              $subLink = '/gallery/show/'.$category->name.'/'.$subcats->name.'/'.$subcats->id;
+                              $subcatshtml = $subcatshtml.'<li>
+                                  <a href="'.$subLink.'" style="color:#fff; padding-bottom:10px;" class="galhover">&#62; '.$subcats->name.'</a>
+                                  </li>';
+                            }
+
+                            if($subcatshtml){
+                              echo '<li>
+                                  <a href="'.$link.'" style="color:#fff; padding-bottom:10px;" class="galhover">'.$category->name.' </a>
+                                  <ul class="list-unstyled" style="text-align:left;">'.$subcatshtml.'</ul>
+                                  </li>';
+                            }else{
+                              echo '<li>
+                                  <a href="'.$link.'" style="color:#fff; padding-bottom:10px;" class="galhover">'.$category->name.'</a>
+                                  </li>';
+                            }
+
+                          }
+
+                        }
+
+                      }
+                    ?>
               </ul>
 
               </div>
+
+
+
+              <!-- -->
 
               <div class="col-xs-12 give-green-shade cht-push-right">
 
                   <!-------->
                   <div class="col-lg-12 chy-left-text ">
+                    <?php
+                      if(!$showForCategory){
+                        $allCatImages = '';
+                        $getAllCategory = Category::get();
 
+                        foreach ($getAllCategory as $cats) {
+                          if($cats->name != 'None...'){
+
+                              $categoryData = Gallery::where('category','=',$cats->id)->orderBy('position')->first();
+                              if($categoryData){
+                                $link = '/gallery/show/'.$cats->name.'/'.$cats->id;
+                                $allCatImages = $allCatImages.'
+                                <div class="col-md-4 portfolio-item galleryitem bw">
+                                    <a href="'.$link.'">
+                                        <img class="img-responsive" src="/'.$categoryData->imageurl.'" alt="">
+                                    </a>
+                                    <p>'.$cats->name.'</p>
+                                </div>';
+                              }else{
+                                  $getSubCategorys = Category::where('parent','=',$cats->id)->orderBy('position')->first();
+
+                                  if($getSubCategorys){
+                                    $subcatshtml  = '';
+                                    $subLink = '/gallery/show/'.$category->name.'/'.$subcats->name.'/'.$subcats->id;
+                                    $allCatImages = $allCatImages.'
+                                      <div class="col-md-4 portfolio-item galleryitem bw">
+                                          <a href="'.$subLink.'">
+                                              <img class="img-responsive" src="/'.$subcats->imageurl.'" alt="">
+                                          </a>
+                                          <p>'.$cats->name.'</p>
+                                      </div>';
+                                  }
+
+                              }
+
+
+
+
+                          }
+                        }
+
+                    ?>
+                  <div class="col-lg-12 chy-left-text  chy-onek-text assign-scroll">
+                        <div style="margin-left:10px;margin-right:15px;;margin-top:5%;">
+                            <!-- Projects Row -->
+                            <div class="row">
+
+                                <?php echo $allCatImages; ?>
+
+
+                                <!-- /.row -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <?php
+                      }
+                    ?>
+
+                    <?php
+                      if($showForCategory){
+                    ?>
                     <div style="margin-left:10px;margin-right:10px;;margin-top:2%;">
 
 
@@ -186,10 +261,10 @@
 
 
 
-                          <?php foreach($data as $img): ?>
+                          <?php foreach($categoryData as $img): ?>
 
-                                    <a href="<?php echo $img; ?>" data-lightbox="multiimages" class="col-md-2 portfolio-item galleryitem bw">
-                                        <img class="img-responsive" src="<?php echo $img; ?>" alt="" class="img-responsive">
+                                    <a href="/<?php echo $img->imageurl; ?>" data-lightbox="multiimages" data-title="<?php echo $img->name; ?>" class="col-md-2 portfolio-item galleryitem bw">
+                                        <img class="img-responsive" src="/<?php echo $img->imageurl; ?>" alt="<?php echo $img->name; ?>" class="img-responsive">
                                     </a>
                                     <!--<p>Lorem Ipsum</p>-->
 
@@ -206,11 +281,23 @@
 
 
                     </div>
+
+                    <?php
+                      }
+                    ?>
+
+
                 </div>
                   <!-------->
+                  <div style="visibility:hidden;">
+Chaity Group is a vertically integrated manufacturer and exporter of garments for men, women and Meaning, this group has consolidated all stages of production starting from knitting, dyeing, finishing to cutting, sewing and packing under one roof. Here in Chaity Group we have been able to creat a dynamic and vibrant working environment with people having national and international exposure. At “chaity” our sole aim has always been to satisfy the diverse and specialized requirements of our buyers. Wining the trust and confidence of our clients through proper care and attention has always been our first priority. We pursue an integrated and sustainable development strategy to achieve a long lasting and sustainable market in garments manufacturing industry.
+
+                          </div>
 
 
               </div>
+
+              <!-- -->
 
           </div>
       </div>

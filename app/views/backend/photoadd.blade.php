@@ -56,7 +56,7 @@
                                   </div>
 
                                   <div class="form-group">
-                                      <label class="col-sm-2 col-sm-2 control-label">Slide Image [1366x768]</label>
+                                      <label class="col-sm-2 col-sm-2 control-label">Slide Image [900x700]</label>
                                       <div class="col-sm-10">
                                           <input type="file" class="form-control" name="slidefile">
                                       </div>

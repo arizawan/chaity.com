@@ -55,7 +55,7 @@ class RainGalleryContent extends BaseController {
             $name       =   $file->getClientOriginalName();
             $extension  =   $file->getClientOriginalExtension();
             $newfilename=   uniqid(md5(rand(0000, 9999).$name)).'.'.$extension;
-            $image      =   Image::make($_FILES['slidefile']['tmp_name'])->resize(1366, 768)->save('uploads/'.$newfilename,100);
+            $image      =   Image::make($_FILES['slidefile']['tmp_name'])->resize(900, 700)->save('uploads/'.$newfilename,100);
             $gallery->imageurl = 'uploads/'.$newfilename;
         }
 

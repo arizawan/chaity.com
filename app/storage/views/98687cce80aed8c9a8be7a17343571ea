@@ -106,7 +106,7 @@
 
                         </li>
                         <li >
-                          <a href="/frontend/gallery-page.html">
+                          <a href="/gallery/show/">
                             Gallery
                           </a>
 

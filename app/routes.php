@@ -560,10 +560,32 @@ Route::get('/gallery/show/{name}', function($name)
         }
         closedir($handle);
     }
-
-    //dd($data);
     return View::make('frontend.gallery-innerd')
+                ->with('showForCategory',false)
                 ->with('data', $data);
+});
+Route::get('/gallery/show', function()
+{
+    $user       =   Sentry::getUser();
+    return View::make('frontend.gallery-innerd')
+                ->with('showForCategory',false)
+                ->with('getCategoryData', []);
+});
+Route::get('/gallery/show/{name}/{id}', function($name, $id)
+{
+    $user       =   Sentry::getUser();
+    $getCategoryData = Gallery::where('category','=',$id)->orderBy('position')->get();
+    return View::make('frontend.gallery-innerd')
+                ->with('showForCategory',true)
+                ->with('getCategoryData', $getCategoryData);
+});
+Route::get('/gallery/show/{catname}/{name}/{id}', function($catname, $name, $id)
+{
+    $user       =   Sentry::getUser();
+    $getCategoryData = Gallery::where('category','=',$id)->orderBy('position')->get();
+    return View::make('frontend.gallery-innerd')
+                ->with('showForCategory',true)
+                ->with('getCategoryData', $getCategoryData);
 });
 
 Route::get('/mobile/gallery/show/{name}', function($name)
