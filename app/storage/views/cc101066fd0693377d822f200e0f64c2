@@ -80,10 +80,11 @@
                                   <?php
                                   foreach($getAllCategorys as $category){
                                     if($category->name != 'None...'){
+                                      //dd(Category::find($category->parent)->name);
                                   ?>
                                   <tr>
                                       <td><?php echo $category->name; ?></td>
-                                      <td><?php echo Category::find($category->parent)->name; ?></td>
+                                      <td><?php if(Category::find($category->parent)){echo Category::find($category->parent)->name;}?></td>
                                       <td><?php echo $category->position; ?></td>
                                       <td>
                                           <a class="btn btn-primary btn-xs" href="/admin/category/edit/<?php echo $category->id; ?>"><i class="fa fa-pencil"></i></a>

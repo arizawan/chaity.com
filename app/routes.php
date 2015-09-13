@@ -588,24 +588,31 @@ Route::get('/gallery/show/{catname}/{name}/{id}', function($catname, $name, $id)
                 ->with('getCategoryData', $getCategoryData);
 });
 
-Route::get('/mobile/gallery/show/{name}', function($name)
+Route::get('/mobile/gallery/show/', function()
 {
     $user       =   Sentry::getUser();
-    $pathRead   =   public_path().'/frontend/images/gallery/'.$name.'/';
-    $data       =   array();
 
-    if ($handle = opendir($pathRead)) {
-        while (false !== ($entry = readdir($handle))) {
-            if(strpos($entry, '.') !== (int) 0) {
-                array_push($data, '/frontend/images/gallery/'.$name.'/'.$entry);
-            }
-        }
-        closedir($handle);
-    }
-
-    //dd($data);
     return View::make('frontend.gallery-mobile')
-                ->with('data', $data);
+                ->with('showForCategory',false)
+                ->with('getCategoryData', []);
+});
+
+Route::get('/mobile/gallery/show/{name}/{id}', function($name, $id)
+{
+    $user       =   Sentry::getUser();
+    $getCategoryData = Gallery::where('category','=',$id)->orderBy('position')->get();
+    return View::make('frontend.gallery-mobile')
+                ->with('showForCategory',true)
+                ->with('getCategoryData', $getCategoryData);
+});
+
+Route::get('/mobile/gallery/show/{catname}/{name}/{id}', function($catname, $name, $id)
+{
+    $user       =   Sentry::getUser();
+    $getCategoryData = Gallery::where('category','=',$id)->orderBy('position')->get();
+    return View::make('frontend.gallery-mobile')
+                ->with('showForCategory',true)
+                ->with('getCategoryData', $getCategoryData);
 });
 
 # Home Page Index

@@ -39,45 +39,54 @@
               <!-- Left Column -->
               <div class="col-xs-12 col-md-3">
                   <div class="ch-left-column pull-to-top">
+                      <?php
+                        $categoryData = [];
+                        if($showForCategory){
+                          $categoryData = $getCategoryData;
+                        }else{
+
+                        }
+                      ?>
                       <h1 class="mark-yellow">Gallery</h1>
                       <ul class="list-unstyled chy-side-nav">
+                          <?php
+                            $getAllCategory = Category::orderBy('position')->get();
 
-                          <li>
-                            <a href="/mobile/gallery/show/knitting" class="ch-top-links">Knitting</a>
-                          </li>
-                          <li>
-                            <a href="/mobile/gallery/show/dyeing" class="ch-top-links">Dyeing</a>
-                          </li>
-                          <li>
-                            <a href="/mobile/gallery/show/dyeing-finishing" class="ch-top-links">Dyeing Finishing</a>
-                          </li>
-                          <li>
-                            <a href="/mobile/gallery/show/laboratory" class="ch-top-links">Laboratory</a>
-                          </li>
-                          <li>
-                            <a href="/mobile/gallery/show/cutting" class="ch-top-links">Cutting</a>
-                          </li>
-                          <li>
-                            <a href="/mobile/gallery/show/sewing" class="ch-top-links">Sewing</a>
-                          </li>
-                          <li>
-                            <a href="/mobile/gallery/show/quality" class="ch-top-links">Quality</a>
-                          </li>
-                          <li>
-                            <a href="/mobile/gallery/show/finishing-packing-area" class="ch-top-links">Finishing & Packing Area</a>
-                          </li>
-                          <li>
-                            <a href="/mobile/gallery/show/accessories" class="ch-top-links">Accessories</a>
-                          </li>
-                          <li>
-                            <a href="/mobile/gallery/show/factoryoverview" class="ch-top-links">Factory Overview</a>
-                          </li>
-                          <li>
-                            <a href="/mobile/gallery/show/officeinterior" class="ch-top-links">Office Interior</a>
-                          </li>
-                          <li>
-                            <a href="/mobile/gallery/show/etp" class="ch-top-links">ETP</a>
-                          </li>
+                            foreach ($getAllCategory as $category) {
+                              $link = '';
+
+                              if($category->parent != 1){
+                              }else{
+
+                                if($category->name !== 'None...'){
+                                  $link = '/mobile/gallery/show/'.$category->name.'/'.$category->id;
+                                  $getSubCategorys = Category::where('parent','=',$category->id)->orderBy('position')->get();
+                                  $subcatshtml  = '';
+                                  foreach ($getSubCategorys as $subcats) {
+                                    $subLink = '/mobile/gallery/show/'.$category->name.'/'.$subcats->name.'/'.$subcats->id;
+                                    $subcatshtml = $subcatshtml.'<li>
+                                        <a href="'.$subLink.'" class="ch-top-links">&#62; '.$subcats->name.'</a>
+                                        </li>';
+                                  }
+
+                                  if($subcatshtml){
+                                    echo '<li>
+                                        <a href="'.$link.'" class="ch-top-links">'.$category->name.' </a>
+                                        <ul class="list-unstyled" style="text-align:left;">'.$subcatshtml.'</ul>
+                                        </li>';
+                                  }else{
+                                    echo '<li>
+                                        <a href="'.$link.'" class="ch-top-links">'.$category->name.'</a>
+                                        </li>';
+                                  }
+
+                                }
+
+                              }
+
+                            }
+                          ?>
+
                       </ul>
                   </div>
               </div>
@@ -85,16 +94,84 @@
 
               <!-- Right Column -->
               <div class="col-xs-12 col-md-8">
+                <?php
+                      if(!$showForCategory){
+                        $allCatImages = '';
+                        $getAllCategory = Category::get();
+
+                        foreach ($getAllCategory as $cats) {
+                          if($cats->name != 'None...'){
+
+                              $categoryData = Gallery::where('category','=',$cats->id)->orderBy('position')->first();
+                              if($categoryData){
+                                $link = '/gallery/show/'.$cats->name.'/'.$cats->id;
+                                $allCatImages = $allCatImages.'
+                                <div class="col-md-4 portfolio-item galleryitem bw">
+                                    <a href="'.$link.'">
+                                        <img class="img-responsive strock-img" src="/'.$categoryData->imageurl.'" alt="">
+                                    </a>
+                                    <p>'.$cats->name.'</p>
+                                </div>';
+                              }else{
+                                  $getSubCategorys = Category::where('parent','=',$cats->id)->orderBy('position')->first();
+
+                                  if($getSubCategorys){
+                                    $subcatshtml  = '';
+                                    $subLink = '/mobile/gallery/show/'.$category->name.'/'.$subcats->name.'/'.$subcats->id;
+                                    $allCatImages = $allCatImages.'
+                                      <div class="col-md-4 portfolio-item galleryitem bw">
+                                          <a href="'.$subLink.'">
+                                              <img class="img-responsive strock-img" src="/'.$subcats->imageurl.'" alt="">
+                                          </a>
+                                          <p>'.$cats->name.'</p>
+                                      </div>';
+                                  }
+
+                              }
+
+
+
+
+                          }
+                        }
+
+                    ?>
+
+                    <div class="ch-right-column push-the-bottom">
+                      <div class="row">
+                        <div class="col-md-12 portfolio-item">
+                            <div class="row padding-15">
+
+                                {{$allCatImages}}
+
+                                <!-- /.row -->
+                            <!-- /.row -->
+                              </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <?php
+                      }
+                    ?>
+
+
+
+              <?php
+                      if($showForCategory){
+                    ?>
                   <div class="ch-right-column push-the-bottom">
                       <div class="row">
                         <div class="col-md-12 portfolio-item">
                             <div class="row padding-15">
 
 
-                                @foreach ($data as $img)
+                                @foreach ($categoryData as $img)
 
-                                    <a href="{{$img}}" data-toggle="lightbox" data-gallery="multiimages" class="col-md-2 portfolio-item galleryitem bw">
-                                        <img class="img-responsive strock-img" src="{{$img}}" alt="" class="img-responsive">
+                                    <a href="/{{$img->imageurl}}" data-toggle="lightbox" data-title="{{$img->name}}" data-gallery="multiimages" class="col-md-2 portfolio-item galleryitem bw">
+                                        <img class="img-responsive strock-img" src="/{{$img->imageurl}}" alt="{{$img->name}}" class="img-responsive">
                                     </a>
                                     <!--<p>Lorem Ipsum</p>-->
 
@@ -104,12 +181,10 @@
                             </div>
                         </div>
                     </div>
-
-
-
-
-
                   </div>
+                  <?php
+                      }
+                    ?>
               </div>
               <!-- /Right Column -->
           </div>

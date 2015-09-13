@@ -234,7 +234,7 @@
 
                     ?>
                   <div class="col-lg-12 chy-left-text  chy-onek-text assign-scroll">
-                        <div style="margin-left:10px;margin-right:15px;;margin-top:5%;">
+                        <div style="margin-left:10px;margin-right:15px;;margin-top:0%;">
                             <!-- Projects Row -->
                             <div class="row">
 
